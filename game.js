@@ -4,23 +4,21 @@ window.onload = (event) => {
     const start= document.getElementById('start');
     const status=document.getElementById('status');
     const end=document.getElementById('end');
+    const game=document.getElementById('game');
     const winMsg= document.createTextNode("| YOU WIN!!");
     const loseMsg= document.createTextNode("| YOU LOSE HAHA");
+    const emptyMsg=document.createTextNode("");
+
     start.onmouseover=()=>{
         begin();
     }
     // Functions
-    //start the game contains win-lose conditions
+    //start the game contains initial state
     function begin(){
+     updateScore();
+     status.appendChild(emptyMsg);
      boundaryRedBG(false);
-     boundarySwitchEvent(true);
-
-     game.onclick=()=>{
-        lose();
-     }
-     end.onmouseover=()=>{
-            win();
-        }
+     applyConditions();
     } 
     //lose procedure
     function lose(){
@@ -49,6 +47,22 @@ window.onload = (event) => {
         game.onmouseout=()=>{
         }
         end.onmouseover=()=>{
+        }
+        game.onmouseleave=()=>{
+         }
+    }
+    //apply win-lose conditions
+    function applyConditions(){
+        game.onmouseleave=()=>{
+            lose();
+         };
+        boundarySwitchEvent(true);
+
+        game.onclick=()=>{
+           lose();
+        }
+        end.onmouseover=()=>{
+            win();
         }
     }
     //fadd and remove event to boundaries
