@@ -1,20 +1,20 @@
 window.onload = (event) => {
-    var wins=0;
-    var loses=0;
+    var score=0;
     const boundaries=document.getElementsByClassName('boundary');
     const start= document.getElementById('start');
     const status=document.getElementById('status');
     const end=document.getElementById('end');
-    const game=document.getElementById('game');
+    const winMsg= document.createTextNode("| YOU WIN!!");
+    const loseMsg= document.createTextNode("| YOU LOSE HAHA");
     start.onmouseover=()=>{
         begin();
     }
     // Functions
+    //start the game contains win-lose conditions
     function begin(){
+     boundaryRedBG(false);
      boundarySwitchEvent(true);
-     game.onmouseout=()=>{
-        lose();
-     }
+
      game.onclick=()=>{
         lose();
      }
@@ -22,16 +22,36 @@ window.onload = (event) => {
             win();
         }
     } 
+    //lose procedure
     function lose(){
-        loses++;
+        boundaryRedBG(true);
+        score-=10;
         updateScore();
+        status.appendChild(loseMsg);
         resetEvents();
     }
+    //win procedure
     function win(){
-        wins++;
+        score+=5;
         updateScore();
+        status.appendChild(winMsg);
         resetEvents();
     }
+    //update score onh2 text
+    function updateScore(){
+        status.innerHTML="score: "+score;
+    }
+    //reset event functions
+    function resetEvents(){
+        game.onclick=()=> {
+        }
+        boundarySwitchEvent(false);
+        game.onmouseout=()=>{
+        }
+        end.onmouseover=()=>{
+        }
+    }
+    //fadd and remove event to boundaries
     function boundarySwitchEvent(bool){
         if(bool){
             for (const boundary of boundaries) {
@@ -47,16 +67,17 @@ window.onload = (event) => {
             } 
         }
     }
-    function updateScore(){
-        status.innerHTML="wins: "+wins+" | loses: "+loses;
-    }
-    function resetEvents(){
-        game.onclick=()=> {
+    //change boundaries bg color accourding to situation
+    function boundaryRedBG(bool){
+        if(bool){
+            for (const boundary of boundaries) {
+                boundary.style.backgroundColor='red';
+            } 
         }
-        boundarySwitchEvent(false);
-        game.onmouseout=()=>{
-        }
-        end.onmouseover=()=>{
+        else{
+            for (const boundary of boundaries) {
+                boundary.style.backgroundColor='#eeeeee';
+            } 
         }
     }
   };
