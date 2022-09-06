@@ -41,7 +41,7 @@ window.onload = (event) => {
     }
 
     hardBtn.onclick=()=>{
-        level='impossible';
+        level='hard';
         loadLevel();
     }
 
